@@ -391,10 +391,14 @@ app.get('/api/admin/contacts', requireAdmin, async (req, res) => {
   }
 });
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`=================================================`);
-  console.log(`Manna Play School Server is running on Port ${PORT}`);
-  console.log(`Local Access: http://localhost:${PORT}`);
-  console.log(`=================================================`);
-});
+// Start Server (only if not on Vercel)
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`=================================================`);
+    console.log(`Manna Play School Server is running on Port ${PORT}`);
+    console.log(`Local Access: http://localhost:${PORT}`);
+    console.log(`=================================================`);
+  });
+}
+
+module.exports = app;
