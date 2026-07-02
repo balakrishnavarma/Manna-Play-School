@@ -2,18 +2,35 @@ require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 const bcrypt = require('bcryptjs');
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+let rawSupabase;
+try {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_KEY;
 
-if (!supabaseUrl || !supabaseKey) {
-  console.error("CRITICAL ERROR: Supabase URL and Key are required in the .env file!");
-  process.exit(1);
+  if (supabaseUrl && supabaseKey) {
+    rawSupabase = createClient(supabaseUrl, supabaseKey);
+  } else {
+    console.warn("WARNING: SUPABASE_URL or SUPABASE_KEY is missing from environment variables!");
+  }
+} catch (err) {
+  console.error("Failed to initialize Supabase client:", err);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = new Proxy({}, {
+  get(target, prop) {
+    if (!rawSupabase) {
+      throw new Error("Supabase client is not initialized. Please ensure SUPABASE_URL and SUPABASE_KEY environment variables are set in your Vercel Dashboard project settings.");
+    }
+    return rawSupabase[prop];
+  }
+});
 
 // Seed admin user in Supabase if it doesn't exist
 async function seedDb() {
+  if (!rawSupabase) {
+    console.warn("WARNING: Supabase client is not ready. Skipping database seeding.");
+    return;
+  }
   const adminEmail = 'admin@mannaplayschool.com';
   
   try {
