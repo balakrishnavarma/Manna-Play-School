@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Manna Play School</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #fce4ec; /* Matching the playschool background */
+      color: #334155;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .logo-section img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px solid #ff4081;
+      background-color: white;
+    }
+
+    .logo-section h2 {
+      font-size: 20px;
+      font-weight: 700;
+      background: linear-gradient(to right, #ff4081, #ff80ab);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-grow: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #cbd5e1;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      gap: 15px;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+    }
+
+    .nav-item.active {
+      background: #ff4081;
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
+    }
+
+    .logout-btn {
+      margin-top: auto;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #f87171;
+    }
+
+    .logout-btn:hover {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+      padding: 30px;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .page-title h1 {
+      font-size: 28px;
+      color: #ff4081;
+      font-weight: 700;
+    }
+
+    .page-title p {
+      color: #64748b;
+      margin-top: 5px;
+    }
+
+    .admin-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: white;
+      padding: 8px 18px;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .admin-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ff4081;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .admin-name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #ff4081;
+    }
+
+    .stat-card.blue::before { background: #3b82f6; }
+    .stat-card.green::before { background: #10b981; }
+    .stat-card.yellow::before { background: #f59e0b; }
+
+    .stat-info h3 {
+      font-size: 14px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-info p {
+      font-size: 32px;
+      font-weight: 700;
+      margin-top: 5px;
+      color: #1e293b;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .stat-card.pink .stat-icon { background: #fce4ec; color: #ff4081; }
+    .stat-card.blue .stat-icon { background: #eff6ff; color: #3b82f6; }
+    .stat-card.green .stat-icon { background: #ecfdf5; color: #10b981; }
+    .stat-card.yellow .stat-icon { background: #fffbeb; color: #f59e0b; }
+
+    /* Dashboard Panels */
+    .dashboard-panel {
+      display: none;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      flex-grow: 1;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+
+    .dashboard-panel.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .section-header h2 {
+      font-size: 20px;
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    /* Search/Filter */
+    .filter-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .search-input {
+      padding: 10px 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      width: 300px;
+      transition: border 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: #ff4081;
+    }
+
+    .status-select {
+      padding: 10px 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      background: white;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      flex-grow: 1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background: #f8fafc;
+      padding: 16px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    td {
+      padding: 16px 20px;
+      font-size: 14px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+    }
+
+    tr:hover td {
+      background-color: #fff1f6;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .badge-pending { background: #fffbeb; color: #d97706; }
+    .badge-approved { background: #ecfdf5; color: #059669; }
+    .badge-rejected { background: #fef2f2; color: #dc2626; }
+
+    /* Action Buttons */
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    .btn-view {
+      background: #fce4ec;
+      color: #ff4081;
+    }
+
+    .btn-view:hover {
+      background: #ff4081;
+      color: white;
+    }
+
+    .btn-approve {
+      background: #10b981;
+      color: white;
+    }
+
+    .btn-approve:hover {
+      background: #059669;
+    }
+
+    .btn-reject {
+      background: #ef4444;
+      color: white;
+    }
+
+    .btn-reject:hover {
+      background: #dc2626;
+    }
+
+    /* Cards for Contacts */
+    .contacts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      overflow-y: auto;
+      padding-bottom: 10px;
+    }
+
+    .contact-card {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 8px;
+    }
+
+    .contact-card-header h3 {
+      font-size: 16px;
+      color: #ff4081;
+      font-weight: 600;
+    }
+
+    .contact-card-header span {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    .contact-details {
+      font-size: 14px;
+      color: #475569;
+    }
+
+    .contact-details div {
+      margin-bottom: 4px;
+    }
+
+    .contact-details strong {
+      color: #1e293b;
+    }
+
+    .contact-message {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      border-left: 3px solid #ff4081;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 20px;
+      width: 700px;
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      animation: modalSlide 0.3s ease;
+    }
+
+    @keyframes modalSlide {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      color: white;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      font-size: 28px;
+      color: #cbd5e1;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+
+    .modal-close:hover {
+      color: white;
+    }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .info-item {
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .info-item label {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .info-item span {
+      font-size: 14px;
+      color: #1e293b;
+      font-weight: 500;
+    }
+
+    .info-item.full-width {
+      grid-column: span 2;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      border-top: 1px solid #f1f5f9;
+      padding: 20px 30px;
+      background: #f8fafc;
+      border-radius: 0 0 20px 20px;
+    }
+
+    /* Loading Overlay */
+    .loader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: 500;
+      color: #ff4081;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo-section">
+      <img src="../media/logo.PNG" alt="Manna Play School Logo">
+      <h2>Manna School</h2>
+    </div>
+    <ul class="nav-links">
+      <li class="nav-item active" onclick="switchPanel('dashboard', this)">
+        <span>📊</span> Dashboard
+      </li>
+      <li class="nav-item" onclick="switchPanel('applications', this)">
+        <span>📝</span> Admissions
+      </li>
+      <li class="nav-item" onclick="switchPanel('contacts', this)">
+        <span>✉️</span> Queries
+      </li>
+      <li class="nav-item logout-btn" onclick="logout()">
+        <span>🚪</span> Log Out
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Work Area -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div class="page-title">
+        <h1 id="panel-title">Dashboard</h1>
+        <p id="panel-desc">Welcome to playschool management dashboard.</p>
+      </div>
+      <div class="admin-profile">
+        <div class="admin-avatar" id="admin-initials">BK</div>
+        <div class="admin-name" id="admin-display-name">Bala Krishna Varma</div>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card pink">
+        <div class="stat-info">
+          <h3>Total Applications</h3>
+          <p id="stat-total-apps">0</p>
+        </div>
+        <div class="stat-icon">📝</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-info">
+          <h3>Pending Review</h3>
+          <p id="stat-pending-apps">0</p>
+        </div>
+        <div class="stat-icon">⏳</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-info">
+          <h3>Approved Admissions</h3>
+          <p id="stat-approved-apps">0</p>
+        </div>
+        <div class="stat-icon">✅</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-info">
+          <h3>Contact Queries</h3>
+          <p id="stat-total-queries">0</p>
+        </div>
+        <div class="stat-icon">💬</div>
+      </div>
+    </div>
+
+    <!-- PANEL: DASHBOARD -->
+    <div id="panel-dashboard" class="dashboard-panel active">
+      <div class="section-header">
+        <h2>Overview & Quick Actions</h2>
+      </div>
+      <div style="background: #fff5f6; border-radius: 12px; padding: 25px; border-left: 5px solid #ff4081; margin-bottom: 25px;">
+        <h3 style="color: #ff4081; margin-bottom: 8px; font-size: 18px;">Administrative Control Center</h3>
+        <p style="color: #555; line-height: 1.6; font-size: 15px;">
+          You can process new student admission requests and read queries sent by parents. Use the side tabs to navigate through lists. Seed details are populated in real-time as users register or submit details.
+        </p>
+      </div>
+    </div>
+
+    <!-- PANEL: APPLICATIONS -->
+    <div id="panel-applications" class="dashboard-panel">
+      <div class="section-header">
+        <h2>Admission Applications</h2>
+      </div>
+      <div class="filter-bar">
+        <input type="text" class="search-input" id="search-apps" placeholder="Search by student name..." oninput="filterApplications()">
+        <select class="status-select" id="filter-status" onchange="filterApplications()">
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
+      <div class="table-container">
+        <table id="apps-table">
+          <thead>
+            <tr>
+              <th>Student Name</th>
+              <th>Class</th>
+              <th>Date of Birth</th>
+              <th>Father Contact</th>
+              <th>Mother Name</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="apps-tbody">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PANEL: CONTACTS -->
+    <div id="panel-contacts" class="dashboard-panel">
+      <div class="section-header">
+        <h2>Contact Queries</h2>
+      </div>
+      <div class="contacts-grid" id="contacts-container">
+        <!-- Dynamically populated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="app-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Student Application Detail</h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="modal-student-photo-container" style="text-align: center; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; width: 100%;">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="info-grid" id="modal-info-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+      <div class="modal-footer" id="modal-footer-actions">
+        <!-- Buttons added dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Local State
+    let currentApplications = [];
+    let currentContacts = [];
+
+    // Session check on load
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await fetch('/api/session');
+        const data = await response.json();
+        
+        if (!data.loggedIn || data.user.role !== 'admin') {
+          alert('Access Denied. Admins Only.');
+          window.location.href = '/frontendcode/homepage.html';
+          return;
+        }
+
+        // Display user details
+        document.getElementById('admin-display-name').textContent = data.user.name;
+        // Initials
+        const initials = data.user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        document.getElementById('admin-initials').textContent = initials || 'AD';
+
+        // Load data
+        await fetchAllData();
+      } catch (error) {
+        console.error('Session validation error:', error);
+        window.location.href = '/frontendcode/homepage.html';
+      }
+    });
+
+    async function fetchAllData() {
+      try {
+        // Fetch Applications
+        const appsRes = await fetch('/api/admin/applications');
+        if (appsRes.ok) {
+          currentApplications = await appsRes.json();
+        }
+
+        // Fetch Contacts
+        const contactsRes = await fetch('/api/admin/contacts');
+        if (contactsRes.ok) {
+          currentContacts = await contactsRes.json();
+        }
+
+        // Calculate and Render Stats
+        updateStats();
+        renderApplications(currentApplications);
+        renderContacts(currentContacts);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    function updateStats() {
+      const totalApps = currentApplications.length;
+      const pendingApps = currentApplications.filter(a => a.status === 'pending').length;
+      const approvedApps = currentApplications.filter(a => a.status === 'approved').length;
+      const totalQueries = currentContacts.length;
+
+      document.getElementById('stat-total-apps').textContent = totalApps;
+      document.getElementById('stat-pending-apps').textContent = pendingApps;
+      document.getElementById('stat-approved-apps').textContent = approvedApps;
+      document.getElementById('stat-total-queries').textContent = totalQueries;
+    }
+
+    function switchPanel(panelId, element) {
+      // Toggle active states on side menu
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      element.classList.add('active');
+
+      // Update Top Bar titles
+      const titles = {
+        dashboard: { title: 'Dashboard Overview', desc: 'Summary of applications and portal statistics.' },
+        applications: { title: 'Admission Requests', desc: 'Process and manage play school applications.' },
+        contacts: { title: 'Parent Contact Queries', desc: 'View feedback, messages and questions submitted by parents.' }
+      };
+
+      document.getElementById('panel-title').textContent = titles[panelId].title;
+      document.getElementById('panel-desc').textContent = titles[panelId].desc;
+
+      // Hide all panels
+      document.querySelectorAll('.dashboard-panel').forEach(panel => {
+        panel.classList.remove('active');
+      });
+
+      // Show selected panel
+      document.getElementById(`panel-${panelId}`).classList.add('active');
+    }
+
+    function renderApplications(apps) {
+      const tbody = document.getElementById('apps-tbody');
+      tbody.innerHTML = '';
+
+      if (apps.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #94a3b8;">No applications found</td></tr>`;
+        return;
+      }
+
+      apps.forEach(app => {
+        const tr = document.createElement('tr');
+        
+        let badgeClass = 'badge-pending';
+        if (app.status === 'approved') badgeClass = 'badge-approved';
+        if (app.status === 'rejected') badgeClass = 'badge-rejected';
+
+        tr.innerHTML = `
+          <td style="font-weight: 600;">${escapeHtml(app.studentName)}</td>
+          <td><span style="background: #f0fdf4; color: #15803d; padding: 4px 8px; border-radius: 6px; font-weight: 600; font-size: 13px;">${escapeHtml(app.classAdmitted || 'N/A')}</span></td>
+          <td>${formatDate(app.dob)}</td>
+          <td>${escapeHtml(app.fatherContact)}</td>
+          <td>${escapeHtml(app.motherName || 'N/A')}</td>
+          <td><span class="badge ${badgeClass}">${app.status}</span></td>
+          <td><button class="btn btn-view" onclick="viewApplicationDetails('${app.id}')">View Details</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterApplications() {
+      const searchQuery = document.getElementById('search-apps').value.toLowerCase().trim();
+      const statusQuery = document.getElementById('filter-status').value;
+
+      let filtered = currentApplications;
+
+      if (statusQuery !== 'all') {
+        filtered = filtered.filter(app => app.status === statusQuery);
+      }
+
+      if (searchQuery !== '') {
+        filtered = filtered.filter(app => app.studentName.toLowerCase().includes(searchQuery));
+      }
+
+      renderApplications(filtered);
+    }
+
+    function renderContacts(queries) {
+      const container = document.getElementById('contacts-container');
+      container.innerHTML = '';
+
+      if (queries.length === 0) {
+        container.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 40px; color: #94a3b8;">No messages received yet.</div>`;
+        return;
+      }
+
+      // Sort messages descending by creation
+      const sorted = [...queries].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+      sorted.forEach(q => {
+        const card = document.createElement('div');
+        card.className = 'contact-card';
+        card.innerHTML = `
+          <div class="contact-card-header">
+            <h3>From: ${escapeHtml(q.parentName)}</h3>
+            <span>${formatDateTime(q.createdAt)}</span>
+          </div>
+          <div class="contact-details">
+            <div><strong>Child:</strong> ${escapeHtml(q.childName)}</div>
+            <div><strong>Email:</strong> ${escapeHtml(q.email)}</div>
+            <div><strong>Phone:</strong> ${escapeHtml(q.phone)}</div>
+          </div>
+          <div class="contact-message">
+            "${escapeHtml(q.message)}"
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Modal Operations
+    function viewApplicationDetails(appId) {
+      const app = currentApplications.find(a => a.id === appId);
+      if (!app) return;
+
+      // Populate student photo
+      const photoContainer = document.getElementById('modal-student-photo-container');
+      if (app.studentPhoto) {
+        photoContainer.innerHTML = `
+          <img src="${app.studentPhoto}" alt="Student Photo" style="width: 130px; height: 160px; object-fit: cover; border-radius: 8px; border: 3px solid #ff4081; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+        `;
+      } else {
+        photoContainer.innerHTML = `
+          <div style="width: 130px; height: 160px; background: #e2e8f0; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; border: 2px dashed #cbd5e1; color: #94a3b8; font-size: 13px; font-weight: 500;">
+            <span style="font-size: 24px; display: block; margin-bottom: 5px;">📷</span>
+            No Photo
+          </div>
+        `;
+      }
+
+      const grid = document.getElementById('modal-info-grid');
+      
+      const items = [
+        { label: 'Student Name', value: app.studentName },
+        { label: 'Class Applied For', value: app.classAdmitted || 'N/A' },
+        { label: 'Date of Birth', value: formatDate(app.dob) },
+        { label: 'Aadhar Card Number', value: app.aadhar },
+        { label: 'Father\'s Name', value: app.fatherName || 'N/A' },
+        { label: 'Father Aadhar', value: app.fatherAadhar || 'N/A' },
+        { label: 'Father Contact', value: app.fatherContact },
+        { label: 'Mother\'s Name', value: app.motherName || 'N/A' },
+        { label: 'Mother Contact', value: app.motherContact },
+        { label: 'Place of Birth', value: app.placeOfBirth || 'N/A' },
+        { label: 'City', value: app.city || 'N/A' },
+        { label: 'District', value: app.district || 'N/A' },
+        { label: 'State', value: app.state || 'N/A' },
+        { label: 'Caste', value: app.caste || 'N/A' },
+        { label: 'Religion', value: app.religion || 'N/A' },
+        { label: 'Category', value: app.category || 'N/A' },
+        { label: 'Mother Tongue', value: app.motherTongue || 'N/A' },
+        { label: 'Address', value: app.address || 'N/A', full: true },
+        { label: 'Date Submitted', value: formatDateTime(app.createdAt) },
+        { label: 'Current Status', value: app.status.toUpperCase() }
+      ];
+
+      grid.innerHTML = items.map(item => `
+        <div class="info-item ${item.full ? 'full-width' : ''}">
+          <label>${item.label}</label>
+          <span>${escapeHtml(item.value)}</span>
+        </div>
+      `).join('');
+
+      // Setup Modal Footer Actions
+      const footer = document.getElementById('modal-footer-actions');
+      footer.innerHTML = '';
+
+      if (app.status === 'pending') {
+        footer.innerHTML = `
+          <button class="btn btn-reject" onclick="updateAppStatus('${app.id}', 'rejected')">Reject Application</button>
+          <button class="btn btn-approve" onclick="updateAppStatus('${app.id}', 'approved')">Approve & Admit</button>
+        `;
+      } else {
+        footer.innerHTML = `
+          <span style="color: #64748b; font-size: 14px; font-weight: 500; align-self: center;">This form has been ${app.status.toUpperCase()}</span>
+          <button class="btn btn-view" onclick="closeModal()">Close</button>
+        `;
+      }
+
+      document.getElementById('app-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('app-modal').style.display = 'none';
+    }
+
+    async function updateAppStatus(id, newStatus) {
+      if (!confirm(`Are you sure you want to set application status to ${newStatus.toUpperCase()}?`)) return;
+
+      try {
+        const response = await fetch(`/api/admin/applications/${id}/status`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (response.ok) {
+          closeModal();
+          await fetchAllData(); // Reload stats and lists
+        } else {
+          const err = await response.json();
+          alert('Failed to update status: ' + err.error);
+        }
+      } catch (error) {
+        console.error('Error updating status:', error);
+        alert('Network error occurred.');
+      }
+    }
+
+    async function logout() {
+      try {
+        const res = await fetch('/api/logout', { method: 'POST' });
+        if (res.ok) {
+          window.location.href = '/frontendcode/homepage.html';
+        }
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+
+    // Utility Functions
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return 'N/A';
+      try {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+      } catch (e) {
+        return dateStr;
+      }
+    }
+
+    function formatDateTime(dateStr) {
+      if (!dateStr) return 'N/A';
+      try {
+        const d = new Date(dateStr);
+        return d.toLocaleString('en-IN', { 
+          day: 'numeric', 
+          month: 'short', 
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch (e) {
+        return dateStr;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery - Manna Play School</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .gallery-section {
+      padding: 60px 5%;
+      background-color: var(--primary-bg);
+      text-align: center;
+      min-height: 70vh;
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 20px 0;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: var(--border-radius-card);
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 4px solid transparent;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      border-color: var(--accent-pink);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Modal for popup */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(13, 27, 42, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: var(--border-radius-card);
+      box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      color: var(--accent-pink);
+    }
+
+    .modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+      padding: 20px;
+      z-index: 2001;
+    }
+
+    .modal-nav:hover {
+      color: var(--accent-pink);
+    }
+
+    .modal-prev { left: 20px; }
+    .modal-next { right: 20px; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <a href="homepage.html">
+          <img src="../media/logo.PNG" alt="Manna Play School Logo">
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="homepage.html">Home</a></li>
+        <li><a href="Admissions.html">Admissions</a></li>
+        <li><a href="about us with pic.html">About Us</a></li>
+        <li><a href="contact information.html">Contact</a></li>
+        <li><a href="Academics.html">Academics</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+      </ul>
+      <div class="nav-actions" id="auth-buttons-container">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Enquire Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Gallery Section -->
+  <section class="gallery-section">
+    <h2 class="section-title">Our <span class="text-pink">Gallery</span></h2>
+    <p style="margin-top: -30px; margin-bottom: 40px; color: var(--text-light); font-size: 1.1rem;">
+      Glimpses of joyful learning, exciting activities, and bright smiles at Manna Play School.
+    </p>
+    
+    <div class="gallery-grid" id="gallery-grid">
+      <img src="../media/1.jpg" alt="Gallery Image 1">
+      <img src="../media/2.jpg" alt="Gallery Image 2">
+      <img src="../media/8.jpg" alt="Gallery Image 3">
+      <img src="../media/13.jpg" alt="Gallery Image 4">
+      <img src="../media/12.jpg" alt="Gallery Image 5">
+      <img src="../media/10.jpg" alt="Gallery Image 6">
+      <img src="../media/11.jpg" alt="Gallery Image 7">
+      <img src="../media/9.jpg" alt="Gallery Image 8">
+      <img src="../media/4.jpg" alt="Gallery Image 9">
+      <img src="../media/5.jpg" alt="Gallery Image 10">
+      <img src="../media/3.jpg" alt="Gallery Image 11">
+      <img src="../media/6.jpg" alt="Gallery Image 12">
+      <img src="../media/7.jpg" alt="Gallery Image 13">
+    </div>
+  </section>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="modal">
+    <span class="modal-close" id="modalCloseBtn">&times;</span>
+    <span class="modal-nav modal-prev" id="modalPrevBtn">&#10094;</span>
+    <img id="modalImg" src="" alt="Enlarged Gallery Image">
+    <span class="modal-nav modal-next" id="modalNextBtn">&#10095;</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About Manna Play School</h4>
+        <p style="opacity: 0.8; font-size: 0.95rem;">We provide a child-centric, developmentally appropriate early childhood program tailored for bright minds.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="Admissions.html">Admissions</a></li>
+          <li><a href="fee structure for cbse also.html">Fee Structure</a></li>
+          <li><a href="separate time table.html">Time Tables</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact Us</h4>
+        <div class="footer-contact">
+          <img src="../media/location.png" alt="Location">
+          <a href="https://www.google.com/maps/search/?api=1&query=Manna+play+school+%26+Tuition+point%2C+2+nd+right%2C+rd+building%2C+19-610%2C+Kalidindi+Vari+Street%2C+Murali+Nagar%2C+Sri+Ramachandra+Nagar%2C+Kanuru%2C+Andhra+Pradesh+520007" target="_blank" style="color: inherit; text-decoration: none; display: inline-block;">19-610, Kalidindi Vari Street, Murali Nagar, 2nd Right, 3rd Building, Vijayawada, AP - 520007</a>
+        </div>
+        <div class="footer-contact">
+          <img src="../media/calllogo.jpg" alt="Call">
+          <a href="tel:7981372766" style="color: inherit; text-decoration: none;">7981372766</a>, <a href="tel:7396357017" style="color: inherit; text-decoration: none;">7396357017</a>
+        </div>
+        <div class="footer-contact">
+          <img src="../media/maillogo.webp" alt="Mail">
+          <a href="mailto:mannaplayschool@gmail.com" style="color: inherit; text-decoration: none; text-transform: lowercase;">mannaplayschool@gmail.com</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2024 Manna Play School. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Modal logic
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImg');
+    const closeBtn = document.getElementById('modalCloseBtn');
+    const prevBtn = document.getElementById('modalPrevBtn');
+    const nextBtn = document.getElementById('modalNextBtn');
+    
+    let currentImageIndex = 0;
+    let galleryImages = [];
+
+    function initGallery() {
+      const imgs = document.querySelectorAll('.gallery-grid img');
+      imgs.forEach((img, index) => {
+        galleryImages.push(img.src);
+        img.addEventListener('click', () => {
+          currentImageIndex = index;
+          modal.style.display = 'flex';
+          modalImg.src = galleryImages[currentImageIndex];
+          updateArrowVisibility();
+        });
+      });
+    }
+    
+    initGallery();
+
+    function closeModal() {
+      modal.style.display = 'none';
+      modalImg.src = '';
+    }
+
+    function updateArrowVisibility() {
+      if (currentImageIndex === 0) {
+        prevBtn.style.visibility = 'hidden';
+      } else {
+        prevBtn.style.visibility = 'visible';
+      }
+      
+      if (currentImageIndex === galleryImages.length - 1) {
+        nextBtn.style.visibility = 'hidden';
+      } else {
+        nextBtn.style.visibility = 'visible';
+      }
+    }
+
+    function changeImage(step) {
+      let newIndex = currentImageIndex + step;
+      if (newIndex >= 0 && newIndex < galleryImages.length) {
+        currentImageIndex = newIndex;
+        modalImg.src = galleryImages[currentImageIndex];
+        updateArrowVisibility();
+      }
+    }
+
+    // Event listeners
+    closeBtn.addEventListener('click', closeModal);
+    
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      changeImage(-1);
+    });
+    
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      changeImage(1);
+    });
+
+    modal.addEventListener('click', closeModal);
+    
+    modalImg.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent modal close when clicking the image itself
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      if (modal.style.display === 'flex') {
+        if (event.key === "Escape") {
+          closeModal();
+        } else if (event.key === "ArrowRight") {
+          changeImage(1);
+        } else if (event.key === "ArrowLeft") {
+          changeImage(-1);
+        }
+      }
+    });
+
+    // Session logic
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const response = await fetch('/api/session');
+        const data = await response.json();
+        const container = document.getElementById("auth-buttons-container");
+        
+        if (data.loggedIn) {
+          let adminBtnHtml = "";
+          if (data.user.role === 'admin') {
+            adminBtnHtml = `<a href="admin.html" class="btn btn-outline" style="margin-right:10px;">Dashboard</a>`;
+          }
+          
+          container.innerHTML = `
+            <span style="color: var(--accent-pink); font-weight: 600; margin-right: 15px;">
+              Hi, ${data.user.name}!
+            </span>
+            ${adminBtnHtml}
+            <button onclick="handleLogout()" class="btn btn-secondary">Logout</button>
+          `;
+        }
+      } catch (err) {
+        console.error("Session check failed:", err);
+      }
+    });
+
+    async function handleLogout() {
+      try {
+        const res = await fetch('/api/logout', { method: 'POST' });
+        if (res.ok) {
+          window.location.reload();
+        }
+      } catch (e) {
+        console.error("Logout failed:", e);
+      }
+    }
+  </script>
+</body>
+</html>

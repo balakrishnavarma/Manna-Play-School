@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play School Activities</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #fff8f0;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff5733;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .activity-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .activity-card {
+            width: 260px;
+            background: #fefefe;
+            border-radius: 15px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            transition: all 0.3s ease-in-out;
+        }
+        .activity-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 16px rgba(0, 0, 0, 0.2);
+        }
+        .activity-card img {
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+        .activity-card h3 {
+            margin-top: 12px;
+            color: #007BFF;
+            font-size: 20px;
+        }
+        .activity-card p {
+            font-size: 14px;
+            color: #555;
+            margin: 10px 0;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #ff5733;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #e04d2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Play School Activities</h1>
+        <p>Fun & Engaging Activities for Kids Aged 2-4 Years</p>
+        <div class="activity-grid">
+            <div class="activity-card">
+                <img src="/media/story.jpg" alt="Storytelling">
+                <h3>Storytelling</h3>
+                <p>Interactive and fun stories to enhance imagination.</p>
+            </div>
+            <div class="activity-card">
+                <img src="/media/rhymes and image.jpg" alt="Rhymes & Songs">
+                <h3>Rhymes & Songs</h3>
+                <p>Sing along to classic and new rhymes.</p>
+            </div>
+            <div class="activity-card">
+                <img src="/media/Coloring & Painting.jpg" alt="Coloring & Painting">
+                <h3>Coloring & Painting</h3>
+                <p>Unleash creativity with colors and brushes.</p>
+            </div>
+            <div class="activity-card">
+                <img src="/media/block_building.jpg" alt="Block Building">
+                <h3>Block Building</h3>
+                <p>Enhance motor skills with block stacking.</p>
+            </div>
+            <div class="activity-card">
+                <img src="/media/outdoor_play.jpg" alt="Outdoor Play">
+                <h3>Outdoor Play</h3>
+                <p>Fun time with slides, swings, and running games.</p>
+            </div>
+            <div class="activity-card">
+                <img src="/media/Puppet Show.png" alt="Puppet Show">
+                <h3>Puppet Show</h3>
+                <p>Entertaining puppet stories for joy and learning.</p>
+            </div>
+        </div>
+        <a href="homepage.html" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>

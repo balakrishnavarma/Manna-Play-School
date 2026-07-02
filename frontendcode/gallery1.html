@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery - Manna Play School</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      padding: 20px 0;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .item-container {
+      background-color: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 250px;
+    }
+
+    .item-container img,
+    .item-container video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .popup img,
+    .popup video {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    .popup:target {
+      display: flex;
+    }
+
+    .popup:target ~ .main-content {
+      display: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Popup blocks for images 1 to 20 -->
+  <!-- Use a loop conceptually for img1 to img20 -->
+  <!-- Example for img1 to img20 -->
+  <div id="img1" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/1.jpg" alt=""></div>
+  <div id="img2" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/2.jpg" alt=""></div>
+  <div id="img3" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/3.jpg" alt=""></div>
+  <div id="img4" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/4.jpg" alt=""></div>
+  <div id="img5" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/5.jpg" alt=""></div>
+  <div id="img6" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/6.jpg" alt=""></div>
+  <div id="img7" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/7.jpg" alt=""></div>
+  <div id="img8" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/8.jpg" alt=""></div>
+  <div id="img9" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/9.jpg" alt=""></div>
+  <div id="img10" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/10.jpg" alt=""></div>
+  <div id="img11" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/11.jpg" alt=""></div>
+  <div id="img12" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/12.jpg" alt=""></div>
+  <div id="img13" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/13.jpg" alt=""></div>
+  <div id="img14" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/14.jpg" alt=""></div>
+  <div id="img15" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/15.jpg" alt=""></div>
+  <div id="img16" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/16.jpg" alt=""></div>
+  <div id="img17" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/17.jpg" alt=""></div>
+  <div id="img18" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/18.jpg" alt=""></div>
+  <div id="img19" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/19.jpg" alt=""></div>
+  <div id="img20" class="popup"><a href="#" class="close-btn">&times;</a><img src="../media/20.jpg" alt=""></div>
+
+  <!-- Video Popup -->
+  <div id="vid1" class="popup">
+    <a href="#" class="close-btn" onclick="pauseVideo('video1')">&times;</a>
+    <video id="video1" controls autoplay>
+      <source src="../media/v1.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Main Gallery Section -->
+  <div class="main-content">
+    <h1>Gallery</h1>
+    <div class="gallery">
+      <!-- Items 1 to 20 -->
+      <!-- Repeating item-containers for each image -->
+      <!-- Use correct IDs to open popup -->
+      <!-- Just copy these and change numbers if adding more -->
+      <div class="item-container"><a href="#img1"><img src="../media/1.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img2"><img src="../media/2.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img3"><img src="../media/3.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img4"><img src="../media/4.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img5"><img src="../media/5.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img6"><img src="../media/6.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img7"><img src="../media/7.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img8"><img src="../media/8.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img9"><img src="../media/9.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img10"><img src="../media/10.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img11"><img src="../media/11.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img12"><img src="../media/12.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img13"><img src="../media/13.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img14"><img src="../media/14.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img15"><img src="../media/15.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img16"><img src="../media/16.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img17"><img src="../media/17.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img18"><img src="../media/18.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img19"><img src="../media/19.jpg" alt=""></a></div>
+      <div class="item-container"><a href="#img20"><img src="../media/20.jpg" alt=""></a></div>
+
+      <!-- Video -->
+      <div class="item-container">
+        <a href="#vid1">
+          <video controls>
+            <source src="../media/v1.mp4" type="video/mp4">
+          </video>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript to stop video when closed -->
+  <script>
+    function pauseVideo(videoId) {
+      const video = document.getElementById(videoId);
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+  </script>
+
+</body>
+</html>

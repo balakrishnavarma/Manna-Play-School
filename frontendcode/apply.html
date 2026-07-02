@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manna Play School - Admission Form</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #ffe4ec;
+    margin: 0;
+    padding: 20px;
+}
+
+.form-container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff;
+    border: 3px solid #ff4d6d;
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    color: #c1121f;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 38px;
+}
+
+.header p {
+    margin: 5px;
+    font-size: 15px;
+    color: #333;
+}
+
+.admission-title {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.admission-title span {
+    border: 2px solid #3a86ff;
+    padding: 8px 25px;
+    border-radius: 10px;
+    color: #c1121f;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.photo-box {
+    width: 130px;
+    height: 160px;
+    border: 2px solid #000;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    font-size: 12px;
+}
+
+.form-group {
+    margin: 18px 0;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #555;
+    padding: 8px;
+    background: transparent;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.row input {
+    flex: 1;
+}
+
+.note {
+    font-size: 14px;
+    margin: 20px 0;
+}
+
+button {
+    display: block;
+    margin: 25px auto;
+    background: #ff4d6d;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #d90429;
+}
+
+/* Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 300px;
+}
+
+.popup-box h2 {
+    color: green;
+}
+
+.popup-box button {
+    margin-top: 15px;
+    background: #ff4d6d;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="form-container">
+
+<div class="header">
+    <h1>MANNA PLAY SCHOOL</h1>
+    <p><a href="https://www.google.com/maps/search/?api=1&query=Manna+play+school+%26+Tuition+point%2C+2+nd+right%2C+rd+building%2C+19-610%2C+Kalidindi+Vari+Street%2C+Murali+Nagar%2C+Sri+Ramachandra+Nagar%2C+Kanuru%2C+Andhra+Pradesh+520007" target="_blank" style="color: inherit; text-decoration: none;">19-610, 2nd Right, 3rd Building, Murali Nagar, Vijayawada</a></p>
+    <p>Cell: 7396357017, 9515556965</p>
+</div>
+
+<div class="admission-title">
+    <span>ADMISSION FORM</span>
+</div>
+
+<form id="admission-form">
+  <div class="photo-box" onclick="document.getElementById('studentPhotoInput').click()" style="cursor: pointer; overflow: hidden; border: 2px dashed #ff4d6d; text-align: center; padding: 5px;">
+      <input type="file" id="studentPhotoInput" accept="image/*" style="display: none;">
+      <input type="hidden" name="studentPhoto" id="studentPhotoBase64" required>
+      <img id="photo-preview" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+      <div id="photo-placeholder" style="color: #555; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+        <span style="font-size: 28px; display: block; margin-bottom: 5px;">📷</span>
+        <span style="font-size: 11px; font-weight: bold; line-height: 1.2;">Click to Upload Photo</span>
+      </div>
+  </div>
+
+<div class="form-group">
+    <label>Name of the Student:</label>
+    <input type="text" name="studentName" required>
+</div>
+
+<div class="form-group">
+    <label>Date of Birth:</label>
+    <input type="date" name="dob" required>
+</div>
+
+<div class="form-group">
+    <label>Class Seeking Admission:</label>
+    <div style="display: flex; gap: 20px; align-items: center; margin-top: 8px;">
+        <label style="display: inline-flex; align-items: center; font-weight: normal; cursor: pointer; color: var(--text-main);">
+            <input type="radio" name="classAdmitted" value="Play School" required style="width: auto; margin-right: 8px;"> Play School
+        </label>
+        <label style="display: inline-flex; align-items: center; font-weight: normal; cursor: pointer; color: var(--text-main);">
+            <input type="radio" name="classAdmitted" value="LKG" required style="width: auto; margin-right: 8px;"> LKG
+        </label>
+        <label style="display: inline-flex; align-items: center; font-weight: normal; cursor: pointer; color: var(--text-main);">
+            <input type="radio" name="classAdmitted" value="UKG" required style="width: auto; margin-right: 8px;"> UKG
+        </label>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Aadhar Card No:</label>
+    <input type="text" name="aadhar" maxlength="12" pattern="[0-9]{12}"
+    oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
+    placeholder="Enter 12 digit Aadhar" required>
+</div>
+
+<div class="form-group">
+    <label>Father's Name:</label>
+    <input type="text" name="fatherName" required>
+</div>
+
+<div class="form-group">
+    <label>Father Aadhar:</label>
+    <input type="text" name="fatherAadhar" maxlength="12" pattern="[0-9]{12}"
+    oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
+    placeholder="Enter 12 digit Aadhar" required>
+</div>
+
+<div class="form-group">
+    <label>Father Contact:</label>
+    <input type="text" name="fatherContact" maxlength="10" pattern="[0-9]{10}"
+    oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
+    placeholder="Enter 10 digit number" required>
+</div>
+
+<div class="form-group">
+    <label>Mother's Name:</label>
+    <input type="text" name="motherName" required>
+</div>
+
+<div class="form-group">
+    <label>Mother Contact:</label>
+    <input type="text" name="motherContact" maxlength="10" pattern="[0-9]{10}"
+    oninput="this.value=this.value.replace(/[^0-9]/g,'')" 
+    placeholder="Enter 10 digit number" required>
+</div>
+
+<p class="note">
+Attach Photostat copy of birth certificate issued by Municipal Corporation
+</p>
+
+<div class="row">
+    <input type="text" name="placeOfBirth" placeholder="Place of Birth" required>
+    <input type="text" name="city" placeholder="City" required>
+    <input type="text" name="district" placeholder="District" required>
+    <input type="text" name="state" placeholder="State" required>
+</div>
+
+<div class="row">
+    <input type="text" name="caste" placeholder="Caste" required>
+    <input type="text" name="religion" placeholder="Religion" required>
+</div>
+
+<div class="row">
+    <input type="text" name="category" placeholder="Category" required>
+    <input type="text" name="motherTongue" placeholder="Mother Tongue" required>
+</div>
+
+<div class="form-group">
+    <label>Address:</label>
+    <input type="text" name="address" required>
+</div>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<!-- Popup -->
+<div id="popup" class="popup">
+    <div class="popup-box">
+        <h2>✅ Success!</h2>
+        <p>Form Submitted Successfully</p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch('/api/session');
+        const data = await response.json();
+        if (!data.loggedIn) {
+            alert("Please log in first to submit and track your admission application.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        // Set max Date of Birth limit to today (local timezone)
+        const today = new Date();
+        const y = today.getFullYear();
+        const m = String(today.getMonth() + 1).padStart(2, '0');
+        const d = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${y}-${m}-${d}`;
+        
+        const dobInput = document.querySelector('input[name="dob"]');
+        if (dobInput) {
+            dobInput.setAttribute('max', todayStr);
+        }
+
+        // Check if there is an existing pending application
+        const appsRes = await fetch('/api/my-applications');
+        const appsData = await appsRes.json();
+        if (appsData.success) {
+            const hasPending = appsData.applications.some(a => a.status === 'pending');
+            if (hasPending) {
+                alert("You already have an active pending application. You cannot submit another one until it is approved or rejected.");
+                window.location.href = "homepage.html";
+            }
+        }
+    } catch (err) {
+        console.error("Session check failed:", err);
+    }
+});
+
+document.getElementById("admission-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    if (!data.studentPhoto || data.studentPhoto.trim() === "") {
+        alert("Please upload the student's photo before submitting the application.");
+        return;
+    }
+
+    // Helper to calculate age in completed years
+    function getAge(dobString) {
+        const today = new Date();
+        const birthDate = new Date(dobString);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const d = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${y}-${m}-${d}`;
+    
+    if (data.dob > todayStr) {
+        alert("Date of Birth cannot be in the future.");
+        return;
+    }
+
+    const dobParts = data.dob.split('-');
+    if (dobParts.length === 3) {
+        const month = parseInt(dobParts[1], 10);
+        const day = parseInt(dobParts[2], 10);
+        if (month < 1 || month > 12) {
+            alert("Invalid Month in Date of Birth. It must be between 1 and 12.");
+            return;
+        }
+        if (day < 1 || day > 31) {
+            alert("Invalid Day in Date of Birth. It must be between 1 and 31.");
+            return;
+        }
+    } else {
+        alert("Please enter a valid Date of Birth.");
+        return;
+    }
+
+    const age = getAge(data.dob);
+    if (data.classAdmitted === "Play School" && age < 3) {
+        alert("To apply for Play School, the student must be at least 3 years old.");
+        return;
+    }
+    if (data.classAdmitted === "LKG" && age < 4) {
+        alert("To apply for LKG, the student must be at least 4 years old.");
+        return;
+    }
+    if (data.classAdmitted === "UKG" && age < 5) {
+        alert("To apply for UKG, the student must be at least 5 years old.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/apply', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            document.getElementById("popup").style.display = "flex";
+        } else {
+            const err = await response.json();
+            alert("Failed to submit form: " + (err.error || "Server error"));
+        }
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("Network error. Please try again.");
+    }
+});
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    window.location.href = "homepage.html";
+}
+
+// Photo Upload Preview & Base64 Converter
+document.getElementById('studentPhotoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('Please upload an image file.');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+        const base64String = evt.target.result;
+        document.getElementById('studentPhotoBase64').value = base64String;
+        
+        const preview = document.getElementById('photo-preview');
+        const placeholder = document.getElementById('photo-placeholder');
+        
+        preview.src = base64String;
+        preview.style.display = 'block';
+        placeholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - Manna Play School</title>
+    <style>
+        body {
+            background-color: #fce4ec;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+        h1 {
+            color: #e91e63;
+            font-size: 32px;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Manna Play School</h1>
+    <h2 id="user-greeting">Hi, Guest</h2>
+    <p>How can we help you?</p>
+
+    <script>
+        // Simple JavaScript to get user name from localStorage
+        const userName = localStorage.getItem("userName");
+        if (userName) {
+            document.getElementById("user-greeting").textContent = `Hi, ${userName}`;
+        }
+    </script>
+</body>
+</html>
