@@ -263,7 +263,7 @@ Attach Photostat copy of birth certificate issued by Municipal Corporation
     <input type="text" name="address" required>
 </div>
 
-<button type="submit">Submit</button>
+<button type="submit" id="submitBtn">Submit</button>
 
 </form>
 
@@ -318,11 +318,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 document.getElementById("admission-form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting...";
+
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
     if (!data.studentPhoto || data.studentPhoto.trim() === "") {
         alert("Please upload the student's photo before submitting the application.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
         return;
     }
 
@@ -346,6 +352,8 @@ document.getElementById("admission-form").addEventListener("submit", async (e) =
     
     if (data.dob > todayStr) {
         alert("Date of Birth cannot be in the future.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
         return;
     }
 
@@ -355,28 +363,40 @@ document.getElementById("admission-form").addEventListener("submit", async (e) =
         const day = parseInt(dobParts[2], 10);
         if (month < 1 || month > 12) {
             alert("Invalid Month in Date of Birth. It must be between 1 and 12.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit";
             return;
         }
         if (day < 1 || day > 31) {
             alert("Invalid Day in Date of Birth. It must be between 1 and 31.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit";
             return;
         }
     } else {
         alert("Please enter a valid Date of Birth.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
         return;
     }
 
     const age = getAge(data.dob);
     if (data.classAdmitted === "Play School" && age < 3) {
         alert("To apply for Play School, the student must be at least 3 years old.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
         return;
     }
     if (data.classAdmitted === "LKG" && age < 4) {
         alert("To apply for LKG, the student must be at least 4 years old.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
         return;
     }
     if (data.classAdmitted === "UKG" && age < 5) {
         alert("To apply for UKG, the student must be at least 5 years old.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
         return;
     }
 
@@ -394,10 +414,14 @@ document.getElementById("admission-form").addEventListener("submit", async (e) =
         } else {
             const err = await response.json();
             alert("Failed to submit form: " + (err.error || "Server error"));
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Submit";
         }
     } catch (error) {
         console.error("Error submitting form:", error);
         alert("Network error. Please try again.");
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit";
     }
 });
 
