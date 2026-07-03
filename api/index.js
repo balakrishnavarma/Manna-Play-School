@@ -4,6 +4,15 @@ const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
 const db = require('../db');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER || process.env.email_user,
+    pass: process.env.EMAIL_PASS || process.env.email_pass
+  }
+});
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -150,7 +159,7 @@ app.get('/api/session', (req, res) => {
 app.post('/api/forgot-password/send-otp', async (req, res) => {
   const { contact } = req.body;
   if (!contact) {
-    return res.status(400).json({ error: 'Please enter your email or phone.' });
+    return res.status(400).json({ error: 'Please enter your email.' });
   }
 
   // Find user by email (we'll check users)
@@ -167,10 +176,35 @@ app.post('/api/forgot-password/send-otp', async (req, res) => {
     expiresAt: Date.now() + 10 * 60 * 1000 // 10 minutes expiry
   };
 
-  console.log(`[SMS/Email Simulation] Sending OTP to ${contact}: ${otp}`);
+  try {
+    const mailOptions = {
+      from: process.env.EMAIL_USER || process.env.email_user,
+      to: contact,
+      subject: 'Manna Play School - Password Reset OTP',
+      html: `
+        <div style="font-family: sans-serif; text-align: center; padding: 20px;">
+          <h2>Password Reset Request</h2>
+          <p>You requested to reset your password. Use the OTP below to proceed.</p>
+          <h1 style="color: #ff4d6d; letter-spacing: 5px;">${otp}</h1>
+          <p>This code will expire in 10 minutes.</p>
+          <p>If you didn't request this, please ignore this email.</p>
+        </div>
+      `
+    };
 
-  // Return OTP in response so they can easily enter it in local test environment
-  res.json({ success: true, message: 'OTP sent successfully (Simulated)', otp: otp });
+    await transporter.sendMail(mailOptions);
+    console.log(`[Email] Sent real OTP to ${contact}`);
+    res.json({ success: true, message: 'OTP sent successfully to your email.' });
+  } catch (error) {
+    console.error("Error sending email:", error);
+    // If credentials aren't set up yet, fallback to simulation temporarily so the site doesn't break
+    if (!process.env.EMAIL_USER && !process.env.email_user) {
+       console.log(`[Email Simulation Fallback] Sending OTP to ${contact}: ${otp}`);
+       res.json({ success: true, message: 'OTP sent successfully (Simulated)', otp: otp });
+    } else {
+       res.status(500).json({ error: 'Failed to send email. Please check server email configuration.' });
+    }
+  }
 });
 
 // POST: Verify OTP
