@@ -84,7 +84,7 @@ app.post('/api/signup', async (req, res) => {
     res.status(201).json({ success: true, user: req.session.user });
   } catch (error) {
     console.error('Signup error:', error);
-    res.status(500).json({ error: 'Failed to create user account.' });
+    res.status(500).json({ error: error.message || 'Failed to create user account.' });
   }
 });
 
