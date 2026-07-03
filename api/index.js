@@ -119,7 +119,7 @@ app.post('/api/login', async (req, res) => {
     res.json({ success: true, user: req.session.user });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'An error occurred during login.' });
+    res.status(500).json({ error: error.message || 'An error occurred during login.' });
   }
 });
 
