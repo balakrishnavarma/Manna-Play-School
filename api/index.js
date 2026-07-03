@@ -233,8 +233,13 @@ app.post('/api/apply', async (req, res) => {
       return res.status(401).json({ error: 'You must be logged in to submit an admission form.' });
     }
 
-    // Check if user already has a pending application
+    // Check if user already has a pending or approved application
     const userApps = await db.getApplicationsByUserId(req.session.user.id);
+    const hasApproved = userApps.some(a => a.status === 'approved');
+    if (hasApproved) {
+      return res.status(400).json({ error: 'Your application has already been approved! You do not need to apply again.' });
+    }
+
     const hasPending = userApps.some(a => a.status === 'pending');
     if (hasPending) {
       return res.status(400).json({ error: 'You already have a pending application. You cannot submit another one until it is approved or rejected.' });

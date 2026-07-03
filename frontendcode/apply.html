@@ -301,14 +301,22 @@ document.addEventListener("DOMContentLoaded", async () => {
             dobInput.setAttribute('max', todayStr);
         }
 
-        // Check if there is an existing pending application
+        // Check if there is an existing pending or approved application
         const appsRes = await fetch('/api/my-applications');
         const appsData = await appsRes.json();
         if (appsData.success) {
+            const hasApproved = appsData.applications.some(a => a.status === 'approved');
+            if (hasApproved) {
+                alert("Your application has already been approved! You do not need to apply again.");
+                window.location.href = "homepage.html";
+                return;
+            }
+
             const hasPending = appsData.applications.some(a => a.status === 'pending');
             if (hasPending) {
                 alert("You already have an active pending application. You cannot submit another one until it is approved or rejected.");
                 window.location.href = "homepage.html";
+                return;
             }
         }
     } catch (err) {
