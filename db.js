@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs');
 
 let rawSupabase;
 try {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_KEY;
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.supabase_url;
+  const supabaseKey = process.env.SUPABASE_KEY || process.env.supabase_key;
 
   if (supabaseUrl && supabaseKey) {
     rawSupabase = createClient(supabaseUrl, supabaseKey);
